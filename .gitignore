@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+.env
+token.json
+credentials.json
+results.txt
+last_run.txt
+output.txt
