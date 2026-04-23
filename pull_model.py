@@ -1,12 +1,12 @@
 import ollama
 import sys
 
-print("Attempting to pull 'llama3' model...")
+print("Attempting to pull 'llama3.2:1b' model...")
 
 try:
     # This acts as a generator for progress
     current_digest = ''
-    for progress in ollama.pull('llama3', stream=True):
+    for progress in ollama.pull('llama3.2:1b', stream=True):
         digest = progress.get('digest', '')
         if digest != current_digest and digest:
              print(f"\nPulling layer: {digest[0:12]}...")

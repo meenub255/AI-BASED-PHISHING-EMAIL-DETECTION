@@ -1,8 +1,12 @@
+from typing import Dict, Any
 from src.agents.base import BaseAgent
 
 class ProsecutorAgent(BaseAgent):
     def __init__(self):
-        super().__init__(name="Prosecutor", model_name="llama3")
+        super().__init__(name="Prosecutor", model_name="llama3.2:1b")
+
+    def _build_prompt(self, state: Dict[str, Any]) -> str:
+        return f"EMAIL BODY: {state.get('body_text')}"
 
     def get_system_prompt(self) -> str:
         return """

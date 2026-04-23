@@ -1,8 +1,12 @@
+from typing import Dict, Any
 from src.agents.base import BaseAgent
 
 class AuditorAgent(BaseAgent):
     def __init__(self):
-        super().__init__(name="Auditor", model_name="llama3")
+        super().__init__(name="Auditor", model_name="llama3.2:1b")
+
+    def _build_prompt(self, state: Dict[str, Any]) -> str:
+        return f"SUBJECT: {state.get('subject')}\nSENDER: {state.get('sender')}\nHEADERS: {state.get('raw_headers')}"
 
     def get_system_prompt(self) -> str:
         return """

@@ -6,7 +6,7 @@ from src.state import AgentReport
 from abc import ABC, abstractmethod
 
 class BaseAgent(ABC):
-    def __init__(self, name: str, model_name: str = "llama3"):
+    def __init__(self, name: str, model_name: str = "llama3.2:1b"):
         self.name = name
         self.model_name = model_name
         # Using Ollama client implicitly via library
@@ -37,7 +37,11 @@ class BaseAgent(ABC):
                     'role': 'user',
                     'content': prompt
                 },
-            ], format='json')
+            ], format='json', options={
+                'num_predict': 128,  # Force concise JSON output
+                'num_thread': 8,      # Optimize for user's 8-core CPU
+                'temperature': 0.1    # More stable/faster results
+            })
             
             # Ollama returns a dict with 'message' -> 'content'
             content = response['message']['content']

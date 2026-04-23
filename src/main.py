@@ -32,19 +32,15 @@ class PhishGuardOrchestrator:
             status="ANALYZING"
         )
 
-        # 2. Run Analysis in Parallel
-        print("[Orchestrator] Running agents in parallel...")
+        # 2. Run Analysis Sequentially (Faster on CPU without GPU)
+        print("[Orchestrator] Running agents sequentially for CPU efficiency...")
         try:
-            with ThreadPoolExecutor(max_workers=2) as executor:
-                # Dispatch analysis tasks
-                prosecutor_future = executor.submit(self.prosecutor.analyze, state.model_dump())
-                auditor_future = executor.submit(self.auditor.analyze, state.model_dump())
-                
-                # Collect results as they complete
-                state.reports.append(prosecutor_future.result())
-                state.reports.append(auditor_future.result())
+            # 1. Prosecutor
+            state.reports.append(self.prosecutor.analyze(state.model_dump()))
+            # 2. Auditor
+            state.reports.append(self.auditor.analyze(state.model_dump()))
         except Exception as e:
-            print(f"[Orchestrator] Warning: Parallel agent phase failed: {e}")
+            print(f"[Orchestrator] Warning: Analysis phase failed: {e}")
 
 
         # 3. Final Judgment Phase (Only if at least one report succeeded)

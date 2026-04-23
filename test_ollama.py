@@ -10,14 +10,14 @@ try:
     import pprint
     pprint.pprint(models)
     
-    # Check if llama3 is present
+    # Check if llama3.2:1b is present
     model_names = [m.get('name') or m.get('model') for m in models.get('models', [])]
     print(f"Available models: {model_names}")
 
-    if any('llama3' in m for m in model_names):
-        print("Llama 3 is available!")
+    if any('llama3.2:1b' in m for m in model_names):
+        print("Llama 3.2 1B is available!")
     else:
-        print("WARNING: llama3 not found. You may need to run 'ollama pull llama3'")
+        print("WARNING: llama3.2:1b not found. You may need to run 'ollama pull llama3.2:1b'")
         
 except Exception as e:
     print("Connection Failed!")

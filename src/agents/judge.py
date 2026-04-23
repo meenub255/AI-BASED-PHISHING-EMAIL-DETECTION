@@ -6,7 +6,7 @@ import ollama
 
 class JudgeAgent(BaseAgent):
     def __init__(self):
-        super().__init__(name="Judge", model_name="llama3")
+        super().__init__(name="Judge", model_name="llama3.2:1b")
 
     def get_system_prompt(self) -> str:
         return """
